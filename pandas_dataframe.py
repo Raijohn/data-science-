@@ -39,3 +39,28 @@ titanic_df.to_csv("titanic2.csv")
 #changeing values
 print(titanic_df.loc[0:3,"Name"])# = ["joe","bob","jeff"]
 print(titanic_df.head(5))
+#grouping data
+grouped_collum = titanic_df.groupby("Pclass")
+print(grouped_collum.max())
+grouped_collum = titanic_df.groupby(["Pclass","Sex"])
+print(grouped_collum.count())
+#aggregated functions
+Age = titanic_df[["Age","Fare"]]
+print(Age.mean())
+print(titanic_df.agg({"Age":["min","max"],"Fare":"mean"}))
+#sorting
+print(titanic_df.sort_values(by="Age"))
+#renaming colums
+titanic_df.rename(columns={"Pclass":"PassengerClass"},inplace=True)
+print(titanic_df.columns)
+#replace valus
+titanic_df["Sex"].replace({"female":"F","male":"M"},inplace=True)
+print(titanic_df.head(20))
+#preforming string operations
+print(titanic_df["Name"].str.lower())
+print(titanic_df["Name"].str.split().str.get(-1))
+titanic_df["LastName"] = titanic_df["Name"].str.split().str.get(-1)
+print(titanic_df.head(10))
+
+#Find the mean fare of passengers wrt sex and pclass like (Male 1st Class Passenger ). Do this for all possible combinations - Total 6 combinations.
+print(titanic_df[["PassengerClass","Sex","Fare"]].groupby(["PassengerClass","Sex"]).mean())
